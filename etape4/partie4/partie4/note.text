@@ -1,0 +1,46 @@
+
+ Heritage et Généricité : 
+    - Heritage
+Une classe Herite d'une autre --> recupére ses attribus + methode
+        Exemple : 
+    class Animal {
+        void manger() {
+            System.out.println("Je mange");
+        }
+    }
+
+    class Chien extends Animal {         <----- MOT CLEE EXTENDS Animal (COMME EN CEBD)
+        void aboyer() {
+            System.out.println("Wouf");
+        }
+    }
+
+Donc chien Possede les methode de Animal : 
+    Chien c = new Chien();
+    c.manger();
+    c.aboyer();
+
+    - Notion de Polymorphisme : 
+    Un objet de la class fille peux se comporter commen un objet de la classe mere 
+    Exmple : 
+        Animal a = new Chien();
+        Animal --> type declaré
+        Vrai objet cree --> Chien
+        donc : 
+        ---> a.manger();   // OK (méthode de Animal)
+        ---> animal = c    // OK (inverse error)
+        ---> a.aboyer();   // ❌ interdit (pas dans Animal)
+        !!!!! Attention (Liaison dynamique) si : Si Chien redéfinit une méthode :
+        ---👉 Java appelle la version de Chien, pas celle de Animal.
+        ---> avec super.manger() ca utilise celle de la mere et non de la fille    
+
+Note : - tout les classe herite par default de la classe Object 
+       - Il existe des classes qui sont des classes abstraite --> pas bien definie --> il faut la redefinir 
+
+
+
+
+    - Généricité : 
+    Écrire du code indépendant du type, tout en restant typé.
+    
+        
