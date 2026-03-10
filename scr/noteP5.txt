@@ -1,0 +1,4 @@
+- Graphics g vient du système Swing qui l'appelle automatiquement
+- Donc pour résumer, Jeu aura :
+        un attribut LecteurNiveaux (pour lire les niveaux suivants)
+        un attribut Niveau (le niveau courant)
