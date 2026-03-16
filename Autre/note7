@@ -1,0 +1,45 @@
+La commande javac -d . Modele/*.java Vue/*.java Controleur/*.java Main.java fait tout automatiquement :
+
+-   -d . dit à Java de créer les dossiers des paquetages dans le répertoire courant
+-   Java lit les package Modele;, package Vue;, etc. en haut de chaque fichier et crée les .class dans les bons dossiers
+-   Les import Modele.*;, import Vue.*; etc. font le lien entre les paquetages
+
+java -cp . Main 0
+- cp : dit a java de chercher tous ces .class a partir du repetoire courant 
+
+
+ETAPE 8 / 
+- Class Coup : 
+    - Le modèle devait fournir des infos sur ce qui a bougé. On a créé Coup qui stocke :
+              - position départ/arrivée du pousseur
+              - position départ/arrivée de la caisse si elle a été poussée
+    - deplacer() : dans Niveau retourne maintenant un Coup au lieu d'un bool 
+
+- Systheme de decalage Vue : 
+    - Dans NiveauGraphique on a ajouté une HashMap qui stocke pour chaque case un décalage en fractions de case [dx, dy]. Dans paintComponent chaque image est dessinée à sa position + ce décalage en pixels.
+
+- Classe Animation (Contrôleur) : 
+    - Représente le déplacement progressif d'une pièce.77
+    - À sa création elle applique un décalage maximum (la pièce est déjà à l'arrivée dans le modèle, donc on la fait paraître encore au départ). 
+    - À chaque avance() le décalage diminue progressivement jusqu'à 0.
+
+- Controleur avec Timer (Contrôleur):
+    - Contient une liste d'animations en cours
+    - Le Timer à 10ms appelle actionPerformed qui fait avancer toutes les animations et demande un repaint()
+    - Quand une animation retourne false elle est supprimée de la liste 
+          - (liste) : À chaque coup joué une nouvelle Animation est ajoutée à la liste. Et toutes les 16ms le Timer passe sur toute la liste et fait avancer chaque animation d'un pas.
+          - Liste : [Animation1(en cours), Animation2(en cours)]
+                     ↓ après avance()
+            Liste : [Animation1(étape 2), Animation2(étape 2)]
+                    ↓ quand Animation1 termine
+            Liste : [Animation2(en cours)]
+                    ↓ quand Animation2 termine
+            Liste : [] (vide)
+
+
+- POUSSEUR QUI BOUGE / 
+    - Archivre fournis : 0 = bas / 1 = gauche / 2 = droite / 3 = haut 
+    - d'apres la MCV : Vue stocke les image 
+                       Controleur décide quelle image afficher a quel moment 
+    - Donc : * NiveauGraphique charge toutes les images Pousseur_direction_frame.png      
+             * AnimationPousseur dans le Contrôleur change l'image courante à chaque tick
