@@ -45,6 +45,9 @@ public class Controleur implements ActionListener {
     }
 
     public void ajouteAnimation(Coup coup) {
+        animations.removeIf(a -> a instanceof AnimationCoup);
+        pendingAnimations.removeIf(a -> a instanceof AnimationCoup);
+        ig.supprimeTousLesDecalages();
         if (animationsActives) {
             pendingAnimations.add(new AnimationCoup(
                 coup.ligneDepart, coup.colonneDepart,
@@ -55,6 +58,32 @@ public class Controleur implements ActionListener {
                 pendingAnimations.add(new AnimationCoup(
                     coup.ligneDepartCaisse, coup.colonneDepartCaisse,
                     coup.ligneArriveeCaisse, coup.colonneArriveeCaisse,
+                    ig
+                ));
+            }
+        }
+        ig.repaint();
+    }
+
+    public void toggleAI() {
+        aiPousseur.setActive(!aiPousseur.isActive());
+    }
+
+    // Pour historique 
+    public void ajouteAnimationInverse(Coup coup) {
+         animations.removeIf(a -> a instanceof AnimationCoup);  // ← vide les anims en cours
+         pendingAnimations.removeIf(a -> a instanceof AnimationCoup);
+         ig.supprimeTousLesDecalages();
+        if (animationsActives) {
+            pendingAnimations.add(new AnimationCoup(
+                coup.ligneArrivee, coup.colonneArrivee,
+                coup.ligneDepart, coup.colonneDepart,
+                ig
+            ));
+            if (coup.caisseBougee) {
+                pendingAnimations.add(new AnimationCoup(
+                    coup.ligneArriveeCaisse, coup.colonneArriveeCaisse,
+                    coup.ligneDepartCaisse, coup.colonneDepartCaisse,
                     ig
                 ));
             }

@@ -57,16 +57,33 @@ public class EcouteurDeClavier extends KeyAdapter {
             case KeyEvent.VK_Q:      System.exit(0); return;
             case KeyEvent.VK_ESCAPE: ig.toggleFullscreen(); return;
             case KeyEvent.VK_P: controleur.toggleAnimations(); return;
+            case KeyEvent.VK_I: controleur.toggleAI(); return;
+            case KeyEvent.VK_U:
+                if (jeu.niveau().peutAnnuler()) {
+                    Coup c = jeu.niveau().dernierCoup();
+                    jeu.niveau().annuler();
+                    controleur.ajouteAnimationInverse(c);
+                }
+                return;
+
+            case KeyEvent.VK_R:
+                if (jeu.niveau().peutRefaire()) {
+                    Coup c = jeu.niveau().dernierCoupFutur(); // faut ajouter cette méthode
+                    jeu.niveau().refaire();
+                    controleur.ajouteAnimation(c);
+                }
+                return;
+
             default: return;
         }
 
         Coup coup = jeu.deplace(dl, dc);
-        if (coup != null){
-            // Ajout animation 
+        if (coup != null) {
+            jeu.niveau().faire(coup);  // ← ici
             controleur.ajouteAnimation(coup);
             if (jeu.niveau().estGagne()) {
                 if (!jeu.prochainNiveau()) System.exit(0);
             }
-    }
+        }
 }
 }

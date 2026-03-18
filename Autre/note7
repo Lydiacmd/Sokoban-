@@ -43,3 +43,15 @@ ETAPE 8 /
                        Controleur décide quelle image afficher a quel moment 
     - Donc : * NiveauGraphique charge toutes les images Pousseur_direction_frame.png      
              * AnimationPousseur dans le Contrôleur change l'image courante à chaque tick
+
+
+- ETAPE 10 / 
+Le probleme : quand un ajoueur apuis sur une case 
+// dans le contrôleur
+pousseur.deplacer(direction);
+if (caisse != null) caisse.deplacer(direction);
+C'est direct : action → effet immédiat. Le problème c'est que si tu veux annuler ce coup plus tard, t'as perdu toutes les infos. Tu sais plus ce qui s'est passé.
+
+- Solution : Pattern Cmd -> au lieu d'executer le coup directement -> materialise dans un object -> a tout les info 
+                    -> 2 methodes (executer / annuler) 
+             En Gros : au lieu de faire l'action directement -> cree un objet "objet Coup" --> Appelle coup.executer()

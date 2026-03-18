@@ -37,4 +37,36 @@ public class Coup {
         this.ligneArriveeCaisse = la;
         this.colonneArriveeCaisse = ca;
     }
+
+        public void executer(Niveau nv){
+        // Libere la case de départ du pousseur on verifie si c'est un but ou un mur dessus 
+        boolean butDepart = nv.aBut(ligneDepart, colonneDepart);
+        nv.videCase(ligneDepart, colonneDepart);
+        if (butDepart) nv.ajouteBut(ligneDepart, colonneDepart);
+        // Place le pousseur à l'arrivée
+        nv.ajoutePousseur(ligneArrivee, colonneArrivee);
+
+        if (caisseBougee) {
+            boolean butDepartC = nv.aBut(ligneDepartCaisse, colonneDepartCaisse);
+            nv.videCase(ligneDepartCaisse, colonneDepartCaisse);
+            if (butDepartC) nv.ajouteBut(ligneDepartCaisse, colonneDepartCaisse);
+            nv.ajouteCaisse(ligneArriveeCaisse, colonneArriveeCaisse);
+        }
+    }
+
+    public void annulerCoup(Niveau nv) {
+        // Remet le pousseur à son départ
+        boolean butArrivee = nv.aBut(ligneArrivee, colonneArrivee);
+        nv.videCase(ligneArrivee, colonneArrivee);
+        if (butArrivee) nv.ajouteBut(ligneArrivee, colonneArrivee);
+        nv.ajoutePousseur(ligneDepart, colonneDepart);
+
+        if (caisseBougee) {
+            boolean butArriveeC = nv.aBut(ligneArriveeCaisse, colonneArriveeCaisse);
+            nv.videCase(ligneArriveeCaisse, colonneArriveeCaisse);
+            if (butArriveeC) nv.ajouteBut(ligneArriveeCaisse, colonneArriveeCaisse);
+            nv.ajouteCaisse(ligneDepartCaisse, colonneDepartCaisse);
+        }
+    }
+
 }

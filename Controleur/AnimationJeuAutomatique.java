@@ -8,7 +8,7 @@ public class AnimationJeuAutomatique extends Animation {
     private Jeu jeu;
     private Controleur controleur;
     private int cmp = 0;
-    private static final int INTERVALLE = 60;
+    private static final int INTERVALLE = 30;
 
     public AnimationJeuAutomatique(InterfaceGraphique ig, Jeu jeu, Controleur controleur) {
         super(ig);
@@ -17,8 +17,22 @@ public class AnimationJeuAutomatique extends Animation {
         this.controleur = controleur;
     }
 
+    private boolean active = false;
+
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+
+    public boolean isActive() {
+        return active;
+    }
+
+
     @Override
     public boolean avance() {
+        if (!active) return true;
         cmp++;
         if (cmp >= INTERVALLE) {
             cmp = 0;

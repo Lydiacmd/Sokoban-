@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.awt.Color;
 
-public class Niveau {
+public class Niveau extends HistoriqueAPile {
     private char[][] monTableau;
     private String nomNiveau;
     private int nblignes;
